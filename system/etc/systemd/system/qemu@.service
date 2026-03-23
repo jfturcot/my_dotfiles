@@ -1,0 +1,13 @@
+[Unit]
+Description=QEMU virtual machine
+
+[Service]
+Environment="haltcmd=kill -INT $MAINPID"
+EnvironmentFile=/etc/conf.d/qemu.d/%i
+ExecStart=/home/jf/VMs/%i/boot.sh
+ExecStop=/usr/bin/bash -c ${haltcmd}
+ExecStop=/usr/bin/bash -c ${waitcmd}
+# ExecStop=/usr/bin/bash -c "while ps -p $MAINPID > /dev/null; do /bin/sleep 1; done"
+
+[Install]
+WantedBy=multi-user.target

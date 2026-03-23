@@ -1,0 +1,26 @@
+# Shell
+alias ll="ls -l"
+alias la="ls -la"
+
+# Processes
+alias tu="top -o cpu" 						# cpu
+alias tm="top -o vsize"						# memory
+
+if [ -z "${TMUX}" ]; then
+  alias vi="$(which nvim) --listen /tmp/nvim-server.pipe"
+  alias vim="$(which nvim) --listen /tmp/nvim-server.pipe"
+  alias nvim="$(which nvim) --listen /tmp/nvim-server.pipe"
+else
+  alias vi="$(which nvim) --listen /tmp/nvim-server-$(tmux display-message -p '#S').pipe"
+  alias vim="$(which nvim) --listen /tmp/nvim-server-$(tmux display-message -p '#S').pipe"
+  alias nvim="$(which nvim) --listen /tmp/nvim-server-$(tmux display-message -p '#S').pipe"
+fi
+
+# alias tmuxd="systemd-run --scope --user -- tmux"
+
+alias backup_all_local='sudo rsync -avh --progress --delete --backup --backup-dir=DELETED_FILES/ --exclude="/mnt" --exclude="/run/media" --exclude="/sys" --exclude="/proc" --exclude="/dev" --exclude="/media" --exclude="DELETED_FILES" --exclude="/home/jf/.local/share/Trash" --exclude="/home/jf/.cache" --exclude="/var/lib/docker/overlay2" / /run/media/jf/Backups/jf-laptop-arch'
+alias backup_all_remote='sudo rsync -avh -e "ssh -i /home/jf/.ssh/id_rsa" --progress --delete --backup --backup-dir=DELETED_FILES/ --exclude="/mnt" --exclude="/run/media" --exclude="/sys" --exclude="/proc" --exclude="/dev" --exclude="/media" --exclude="DELETED_FILES" --exclude="/home/jf/.local/share/Trash" --exclude="/home/jf/.cache" --exclude="/var/lib/docker/overlay2" / root@192.168.112.11:/mnt/storage/backups/jf-workstation-arch'
+
+# alias android_webcam_setup="sudo v4l2loopback-ctl add --name 'Android Webcam' /dev/video4 /dev/video4 || echo 'Webcam already set up.'"
+alias android_webcam_setup="sudo modprobe v4l2loopback devices=1 video_nr=4 exclusive_caps=1 card_label='Android WebCam'"
+alias android_webcam="android_webcam_setup && scrcpy --video-source=camera --no-audio --camera-{facing=front,fps=60,size=1920x1080} --v4l2-sink=/dev/video4"

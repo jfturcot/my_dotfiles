@@ -1,0 +1,83 @@
+export LANG=en_US.UTF-8
+
+export EDITOR=$(which nvim)
+export VIM_APP_DIR=$(which nvim)
+
+# Homebrew
+export PATH=/opt/homebrew/bin:$PATH
+export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
+export PATH=/opt/homebrew/opt/qt@5/bin:$PATH
+
+# Docker
+# export DOCKER_HOST=ssh://192.168.111.101
+# export DOCKER_USER="1000:1000"
+COMPOSE_PROFILES=dev
+export UID=$(id -u)
+export GID=$(id -g)
+
+# Android SDK
+if [ -d /usr/lib/jvm/default ]; then
+  export JAVA_HOME=/usr/lib/jvm/default
+fi
+if [ -f /usr/libexec/java_home ]; then
+  export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+fi
+# if [ $commands[update-alternatives]  ]; then
+#   export JAVA_HOME=$(update-alternatives --query javac | sed -n -e 's/Best: *\(.*\)\/bin\/javac/\1/p')
+# fi
+if [ -d $HOME/.android ]; then
+  export ANDROID_HOME=$HOME/.android
+fi
+if [ -d $HOME/Library/Android/sdk ]; then
+  export ANDROID_HOME=$HOME/Library/Android/sdk
+fi
+if [ -d $HOME/Android/Sdk ]; then
+  export ANDROID_HOME=$HOME/Android/Sdk
+fi
+export PATH=$PATH:$JAVA_HOME/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/cmdline-tools/tools/bin:$ANDROID_HOME/emulator
+export GRADLE_HOME=/opt/gradle/gradle-5.1
+export PATH=${GRADLE_HOME}/bin:${PATH}
+export NDK_HOME=$HOME/Android/Sdk/ndk-bundle
+
+# Flutter
+export PATH=$PATH:$HOME/.flutter-sdk/bin
+export PATH=$PATH:/usr/lib/dart/bin:/usr/local/opt/dart/bin
+export PATH=$PATH:$HOME/.pub-cache/bin
+
+# Ruby
+export DISABLE_SPRING=1
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/ruby/lib/pkgconfig"
+# Needed on Linux to compile Ruby with Mise properly
+if ls /usr/lib64/libssl.so* >/dev/null 2>&1 || ls /usr/lib/libssl.so* >/dev/null 2>&1; then
+  export RUBY_CONFIGURE_OPTS="--with-openssl-dir=/usr"
+fi
+
+# Node
+export PATH=~/.node_modules/bin:$PATH
+export npm_config_prefix=~/.node_modules
+export NODE_OPTIONS="--max-old-space-size=8192"
+# export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# Typescript
+export TSC_NONPOLLING_WATCHER="1"
+
+# nvim
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME=$HOME/.local/share
+
+# Home bin
+export PATH=$HOME/bin:$PATH
+export PATH=~/.local/bin:$PATH
+
+# Go
+export GOPATH=$HOME/go
+if [ $commands[brew] ]; then export GOROOT="$(brew --prefix golang)/libexec"; fi
+export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+
+# Vulkan
+if [ -d /opt/homebrew/lib ]; then
+  export LIBVULKAN_PATH=/opt/homebrew/lib/libvulkan.dylib
+fi

@@ -1,0 +1,6 @@
+# On macOS:
+# sudo visudo /private/etc/sudoers.d/su
+# jf ALL = (ALL) NOPASSWD: ALL
+
+haltcmd="ssh -i /home/jf/.ssh/id_rsa jf@192.168.122.101 'nohup sudo shutdown -h now &>/dev/null & exit'"
+waitcmd="while /usr/bin/nc localhost 7000; do sleep 1; done"

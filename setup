@@ -1,0 +1,38 @@
+#!/bin/zsh
+
+# zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+git clone --depth=2 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+ln -sfn ~/.dotfiles/p10k.zsh ~/.p10k.zsh
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+ln -sfn ~/.dotfiles/zsh ~/.zsh
+ln -sfn ~/.dotfiles/zshrc ~/.zshrc
+
+# dev
+ln -sfn ~/.dotfiles/gitconfig ~/.gitconfig
+ln -sfn ~/.dotfiles/gitignore_global ~/.gitignore_global
+ln -sfn ~/.dotfiles/nvim ~/.config/nvim
+ln -sfn ~/.dotfiles/tmux ~/.tmux
+ln -sfn ~/.dotfiles/tmux.conf ~/.tmux.conf
+ln -sfn ~/.dotfiles/gemrc ~/.gemrc
+ln -sfn ~/.dotfiles/irbrc ~/.irbrc
+ln -sfn ~/.dotfiles/lazygit ~/.config/lazygit
+ln -sfn ~/.dotfiles/kitty ~/.config/kitty
+ln -sfn ~/.dotfiles/opencode ~/.config/opencode
+ln -sfn ~/.dotfiles/claude/settings.json ~/.claude/settings.json
+
+# homebrew
+if ! command -v brew &> /dev/null; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+brew install neovim ripgrep lua luarocks go php composer node openjdk julia rust ruby lazygit fd yazi mise postgresql
+brew link luarocks
+
+# /bin/zsh
+# source ~/.zshrc
+
+# npm install -g neovim
+# gem install neovim
+# pip install neovim

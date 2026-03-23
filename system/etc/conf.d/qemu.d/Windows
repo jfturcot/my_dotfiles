@@ -1,0 +1,2 @@
+haltcmd="echo 'system_powerdown' | nc localhost 7101"
+waitcmd="while /usr/bin/nc localhost 7001; do sleep 1; done"

@@ -1,0 +1,29 @@
+[core]
+	editor = nvim
+	excludesfile = ~/.gitignore_global
+[user]
+	name = J.F. Turcot
+	email = jf.turcot@gmail.com
+[init]
+	defaultBranch = main
+[push]
+	default = current
+[pull]
+	rebase = true
+[color]
+	ui = true
+	status = auto
+	branch = auto
+[github]
+  user = jfturcot
+; [url "git@github.com:"]
+; 	insteadOf = git://github.com/
+; 	insteadOf = https://github.com/
+[credential "https://source.developers.google.com"]
+	helper = gcloud.sh
+[credential "https://github.com"]
+	helper = 
+	helper = !/home/linuxbrew/.linuxbrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/home/linuxbrew/.linuxbrew/bin/gh auth git-credential

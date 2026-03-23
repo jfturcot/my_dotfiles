@@ -1,0 +1,10 @@
+zsh/env_secure
+gitconfig.github
+
+nvim/.undo
+.nvimlog
+
+zsh_history
+
+.stfolder
+.ruby-lsp
