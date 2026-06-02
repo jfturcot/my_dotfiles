@@ -8,3 +8,6 @@ zsh_history
 
 .stfolder
 .ruby-lsp
+
+# Claude Code local project state (not dotfiles)
+.claude/
