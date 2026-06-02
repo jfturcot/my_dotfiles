@@ -36,15 +36,46 @@ ln -sfn ~/.dotfiles/kitty ~/.config/kitty
 ln -sfn ~/.dotfiles/opencode ~/.config/opencode
 ln -sfn ~/.dotfiles/claude/settings.json ~/.claude/settings.json
 
-# homebrew
-if ! command -v brew &> /dev/null; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# packages
+if command -v pacman &> /dev/null; then
+    # Arch
+    # npm depends on the virtual `nodejs` provider, so an existing nodejs-lts-* satisfies it
+    # without forcing a swap to the latest `nodejs`; fresh installs still pull nodejs in.
+    sudo pacman -S --needed --noconfirm neovim ripgrep lua luarocks go php composer npm jdk-openjdk julia rust ruby lazygit fd yazi mise postgresql
+else
+    # homebrew
+    if ! command -v brew &> /dev/null; then
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+    brew install neovim ripgrep lua luarocks go php composer node openjdk julia rust ruby lazygit fd yazi mise postgresql
+    brew link luarocks
 fi
-brew install neovim ripgrep lua luarocks go php composer node openjdk julia rust ruby lazygit fd yazi mise postgresql
-brew link luarocks
 
-# /bin/zsh
-# source ~/.zshrc
+# styx (software KVM: share this machine's keyboard/mouse with another over LAN).
+# Linux = sender (has the physical keyboard/mouse); macOS = receiver.
+mkdir -p ~/.config/styx
+if command -v pacman &> /dev/null; then
+    [ -x ~/.cargo/bin/styx-sender ] || cargo install --git https://github.com/ghreprimand/styx styx-sender
+    ln -sfn ~/.dotfiles/styx/sender.toml ~/.config/styx/config.toml
+    # stable path for the keyd virtual keyboard (styx captures it; see sender.toml)
+    sudo cp ~/.dotfiles/styx/99-keyd-virtual.rules /etc/udev/rules.d/99-keyd-virtual.rules
+    sudo udevadm control --reload-rules && sudo udevadm trigger
+    # auto-start the sender with the Wayland session (restart on crash, logs in journald)
+    mkdir -p ~/.config/systemd/user
+    ln -sfn ~/.dotfiles/styx/styx-sender.service ~/.config/systemd/user/styx-sender.service
+    systemctl --user daemon-reload
+    systemctl --user enable styx-sender.service
+else
+    # macOS receiver also needs Accessibility permission granted after first run.
+    [ -x ~/.cargo/bin/styx-receiver ] || cargo install --git https://github.com/ghreprimand/styx styx-receiver
+    ln -sfn ~/.dotfiles/styx/receiver.toml ~/.config/styx/config.toml
+fi
+
+# make zsh the default login shell (interactive: prompts for your password, so keep it last)
+zsh_path=$(command -v zsh)
+if [ -n "$zsh_path" ] && [ "$SHELL" != "$zsh_path" ]; then
+    chsh -s "$zsh_path"
+fi
 
 # npm install -g neovim
 # gem install neovim
