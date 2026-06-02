@@ -1,11 +1,20 @@
 #!/bin/zsh
 
-# zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-git clone --depth=2 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+# zsh: plain zsh + standalone plugins, sourced directly from packages (no oh-my-zsh).
+if command -v pacman &> /dev/null; then
+    # Arch: plugins are official packages, p10k lives in the AUR.
+    sudo pacman -S --needed --noconfirm zsh zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search
+    aur=$(command -v yay || command -v paru)
+    if [ -n "$aur" ]; then
+        "$aur" -S --needed --noconfirm zsh-theme-powerlevel10k
+    else
+        echo "No AUR helper (yay/paru) found — install 'zsh-theme-powerlevel10k' from the AUR for the prompt." >&2
+    fi
+else
+    # macOS / Homebrew
+    brew install zsh powerlevel10k zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search
+fi
 ln -sfn ~/.dotfiles/p10k.zsh ~/.p10k.zsh
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 ln -sfn ~/.dotfiles/zsh ~/.zsh
 ln -sfn ~/.dotfiles/zshrc ~/.zshrc
