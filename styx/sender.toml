@@ -1,0 +1,17 @@
+# Styx sender — Linux/Hyprland side (this machine shares its keyboard & mouse).
+# Symlinked to ~/.config/styx/config.toml by setup on Arch/Linux.
+[sender]
+receiver_host = "100.83.250.58"     # the macOS machine (Tailscale IP — encrypted, works home or remote)
+receiver_port = 4242
+
+monitor = "eDP-1"                    # from `hyprctl monitors`
+edge = "right"                       # push the cursor off the right edge to control the Mac
+
+# keyd grabs all physical keyboards and emits remapped events via its virtual device,
+# so capture that (not the physical Keychron). Stable path via 99-keyd-virtual.rules.
+keyboard_device = "/dev/input/keyd-virtual"
+
+[sender.heartbeat]
+active_interval_ms = 1000
+idle_interval_ms = 5000
+miss_threshold = 3

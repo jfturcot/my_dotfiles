@@ -1,0 +1,13 @@
+[Unit]
+Description=styx software KVM sender (share keyboard/mouse to the Mac)
+# Tie to the Wayland session so WAYLAND_DISPLAY is set and we stop with the session.
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+ExecStart=%h/.cargo/bin/styx-sender
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target

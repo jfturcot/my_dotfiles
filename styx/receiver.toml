@@ -1,0 +1,9 @@
+# Styx receiver — macOS side (work Mac receives input from the Linux machine).
+# Symlinked to ~/.config/styx/config.toml by setup on macOS.
+[receiver]
+listen_hosts = ["100.83.250.58"]      # bind ONLY on the Tailscale IP — never exposed on untrusted Wi-Fi
+allowed_senders = ["100.113.69.11"]   # only accept input from the Linux machine's Tailscale IP
+listen_port = 4242
+
+return_edge = "left"                   # the Mac's left edge faces Linux; cross it to hand control back
+# swap_alt_cmd = true                  # uncomment so PC Ctrl/Super/Alt map to Mac Control/Option/Command by position

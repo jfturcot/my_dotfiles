@@ -1,0 +1,6 @@
+# Stable symlink for the keyd virtual keyboard.
+# keyd ([ids] *) grabs all physical keyboards and re-emits remapped events through
+# this single virtual device. styx captures it (instead of a physical keyboard, which
+# keyd holds grabbed) to forward typing to the receiver. The kernel event number
+# (eventN) can shift across reboots, so pin a fixed path here: /dev/input/keyd-virtual
+SUBSYSTEM=="input", KERNEL=="event*", ATTRS{name}=="keyd virtual keyboard", SYMLINK+="input/keyd-virtual"
