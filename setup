@@ -24,8 +24,11 @@ git submodule update --init --recursive
 ln -sfn ~/.dotfiles/gitconfig ~/.gitconfig
 ln -sfn ~/.dotfiles/gitignore_global ~/.gitignore_global
 ln -sfn ~/.dotfiles/nvim ~/.config/nvim
-ln -sfn ~/.dotfiles/tmux ~/.tmux
-ln -sfn ~/.dotfiles/tmux.conf ~/.tmux.conf
+# tmux (XDG layout): only the config is symlinked; TPM owns ~/.config/tmux/plugins.
+mkdir -p ~/.config/tmux/plugins
+ln -sfn ~/.dotfiles/tmux.conf ~/.config/tmux/tmux.conf
+[ -d ~/.config/tmux/plugins/tpm ] || git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+~/.config/tmux/plugins/tpm/bin/install_plugins
 ln -sfn ~/.dotfiles/gemrc ~/.gemrc
 ln -sfn ~/.dotfiles/irbrc ~/.irbrc
 ln -sfn ~/.dotfiles/lazygit ~/.config/lazygit
