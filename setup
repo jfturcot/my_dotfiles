@@ -34,21 +34,30 @@ ln -sfn ~/.dotfiles/irbrc ~/.irbrc
 ln -sfn ~/.dotfiles/lazygit ~/.config/lazygit
 ln -sfn ~/.dotfiles/kitty ~/.config/kitty
 ln -sfn ~/.dotfiles/opencode ~/.config/opencode
+mkdir -p ~/.claude
 ln -sfn ~/.dotfiles/claude/settings.json ~/.claude/settings.json
+ln -sfn ~/.dotfiles/aerospace.toml ~/.aerospace.toml
+ln -sfn ~/.dotfiles/ghostty ~/.config/ghostty
 
 # packages
 if command -v pacman &> /dev/null; then
     # Arch
     # npm depends on the virtual `nodejs` provider, so an existing nodejs-lts-* satisfies it
     # without forcing a swap to the latest `nodejs`; fresh installs still pull nodejs in.
-    sudo pacman -S --needed --noconfirm neovim ripgrep lua luarocks go php composer npm jdk-openjdk julia rust ruby lazygit fd yazi mise postgresql
+    sudo pacman -S --needed --noconfirm neovim ripgrep lua luarocks go php composer npm jdk-openjdk julia rust ruby lazygit fd yazi mise postgresql ghostty opencode openai-codex
+    if [ -n "$aur" ]; then
+        "$aur" -S --needed --noconfirm claude-code
+    else
+        echo "No AUR helper (yay/paru) found — install 'claude-code' from the AUR manually." >&2
+    fi
 else
     # homebrew
     if ! command -v brew &> /dev/null; then
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
-    brew install neovim ripgrep lua luarocks go php composer node openjdk julia rust ruby lazygit fd yazi mise postgresql
+    brew install neovim ripgrep lua luarocks go php composer node openjdk julia rust ruby lazygit fd yazi mise postgresql opencode
     brew link luarocks
+    brew install --cask nikitabobko/tap/aerospace ghostty claude-code codex
 fi
 
 # styx (software KVM: share this machine's keyboard/mouse with another over LAN).
