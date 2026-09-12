@@ -1,0 +1,74 @@
+# Based on /home/jf/.dotfiles/tmux.conf.
+# tmux windows -> Herdr tabs; tmux sessions -> Herdr workspaces.
+onboarding = false
+
+[terminal]
+default_shell = "/bin/zsh"
+
+[keys]
+prefix = "ctrl+a"
+help = "prefix+?"
+detach = "prefix+d"
+
+# tmux split-window -h creates side-by-side panes; -v stacks them.
+split_vertical = "prefix+|"
+split_horizontal = "prefix+minus"
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+
+# Use Herdr defaults: r enters resize mode, R reloads config,
+# and H/J/K/L swap panes. g opens goto, b toggles the sidebar,
+# and e opens scrollback in $EDITOR.
+
+close_pane = "prefix+x"
+zoom = "prefix+z"
+cycle_pane_next = "prefix+o"
+last_pane = "prefix+;"
+copy_mode = "prefix+["
+
+# Standard tmux window bindings, inherited by your tmux config.
+new_tab = "prefix+c"
+rename_tab = "prefix+comma"
+close_tab = "prefix+ampersand"
+switch_tab = "prefix+1..9"
+previous_tab = "prefix+p"
+next_tab = "prefix+n"
+
+# Use Herdr defaults: w opens the workspace picker, W renames a workspace.
+# Keep tmux-style previous/next workspace cycling.
+previous_workspace = "prefix+("
+next_workspace = "prefix+)"
+
+# Navigate mode only: j/k select workspaces; Ctrl+j/k move between panes.
+# Horizontal pane navigation retains the default h/l.
+navigate_workspace_up = "k"
+navigate_workspace_down = "j"
+navigate_pane_up = "ctrl+k"
+navigate_pane_down = "ctrl+j"
+
+# Move Herdr-only actions away from tmux bindings.
+settings = "prefix+shift+s"
+open_notification_target = "prefix+alt+o"
+
+# vim-tmux-navigator's conditional Ctrl+h/j/k/l and Ctrl+backslash
+# forwarding requires editor integration, not unconditional Herdr bindings.
+# Herdr's copy mode already supports vi movement and selection.
+# tmux's send-keys Shift+Enter workaround and TPM plugins are not portable.
+
+[[keys.command]]
+key = "prefix+alt+g"
+type = "popup"
+command = "lazygit"
+description = "Lazygit"
+width = "80%"
+height = "80%"
+
+[ui]
+mouse_capture = true
+prompt_new_tab_name = false
+pane_gaps = false
+pane_outer_borders = false
+pane_scrollbars = false
+tab_bar_position = "bottom"
