@@ -7,9 +7,8 @@ alias tu="top -o cpu" 						# cpu
 alias tm="top -o vsize"						# memory
 
 if [ -z "${TMUX}" ]; then
-  alias vi="$(which nvim) --listen /tmp/nvim-server.pipe"
-  alias vim="$(which nvim) --listen /tmp/nvim-server.pipe"
-  alias nvim="$(which nvim) --listen /tmp/nvim-server.pipe"
+  alias vi='nvim'
+  alias vim='nvim'
 else
   alias vi="$(which nvim) --listen /tmp/nvim-server-$(tmux display-message -p '#S').pipe"
   alias vim="$(which nvim) --listen /tmp/nvim-server-$(tmux display-message -p '#S').pipe"
