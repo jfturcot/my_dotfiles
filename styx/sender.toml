@@ -1,7 +1,7 @@
 # Styx sender — Linux/Hyprland side (this machine shares its keyboard & mouse).
 # Symlinked to ~/.config/styx/config.toml by setup on Arch/Linux.
 [sender]
-receiver_host = "100.83.250.58"     # the macOS machine (Tailscale IP — encrypted, works home or remote)
+receiver_host = "192.168.111.118"     # the macOS machine (Tailscale IP — encrypted, works home or remote)
 receiver_port = 4242
 
 monitor = "eDP-1"                    # from `hyprctl monitors`
