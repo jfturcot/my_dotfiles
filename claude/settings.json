@@ -17,5 +17,6 @@
   "tui": "default",
   "editorMode": "vim",
   "autoCompactEnabled": false,
+  "model": "opus",
   "hooks": {"SessionStart":[{"matcher":"*","hooks":[{"type":"command","command":"bash '/home/jf/.claude/hooks/herdr-agent-state.sh' session","timeout":10}]}]}
 }
