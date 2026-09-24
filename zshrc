@@ -1,5 +1,12 @@
 # ~/.zshrc — plain zsh, no oh-my-zsh framework.
 
+# SSH forwards TERM, but the remote host may lack Ghostty's terminfo entry.
+# Fall back before loading the prompt so Zsh can redraw the input correctly.
+if [[ -n $SSH_CONNECTION && $TERM == xterm-ghostty ]] &&
+   (( $+commands[infocmp] )) && ! infocmp "$TERM" >/dev/null 2>&1; then
+  export TERM=xterm-256color
+fi
+
 # Source the first of the candidate files that exists (handles Arch vs Homebrew paths).
 _src() { local p; for p in "$@"; do [[ -r $p ]] && { source "$p"; return 0; }; done; return 1 }
 

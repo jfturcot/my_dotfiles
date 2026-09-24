@@ -19,6 +19,10 @@ ln -sfn ~/.dotfiles/p10k.zsh ~/.p10k.zsh
 ln -sfn ~/.dotfiles/zsh ~/.zsh
 ln -sfn ~/.dotfiles/zshrc ~/.zshrc
 
+if [[ $(uname -s) == Darwin ]]; then
+    ln -sfn ~/.dotfiles/terminfo ~/.terminfo
+fi
+
 # dev
 git submodule update --init --recursive
 ln -sfn ~/.dotfiles/gitconfig ~/.gitconfig
