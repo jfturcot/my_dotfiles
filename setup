@@ -76,14 +76,13 @@ fi
 # Linux = sender (has the physical keyboard/mouse); macOS = receiver.
 mkdir -p ~/.config/styx
 if command -v pacman &> /dev/null; then
-    [ -x ~/.cargo/bin/styx-sender ] || cargo install --git https://github.com/ghreprimand/styx styx-sender
+    # Install the styx-sender Arch package from the Styx repo (cd dist && makepkg -si) first.
     ln -sfn ~/.dotfiles/styx/sender.toml ~/.config/styx/config.toml
     # stable path for the keyd virtual keyboard (styx captures it; see sender.toml)
     sudo cp ~/.dotfiles/styx/99-keyd-virtual.rules /etc/udev/rules.d/99-keyd-virtual.rules
     sudo udevadm control --reload-rules && sudo udevadm trigger
     # auto-start the sender with the Wayland session (restart on crash, logs in journald)
-    mkdir -p ~/.config/systemd/user
-    ln -sfn ~/.dotfiles/styx/styx-sender.service ~/.config/systemd/user/styx-sender.service
+    # Use the systemd user service supplied by the Arch package.
     systemctl --user daemon-reload
     systemctl --user enable styx-sender.service
 else
