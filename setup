@@ -27,7 +27,15 @@ fi
 git submodule update --init --recursive
 ln -sfn ~/.dotfiles/gitconfig ~/.gitconfig
 ln -sfn ~/.dotfiles/gitignore_global ~/.gitignore_global
-ln -sfn ~/.dotfiles/nvim ~/.config/nvim
+if [ -f ~/.config/nvim/lazyvim.json ]; then
+    # Extend the installed LazyVim distribution with our customizations.
+    mkdir -p ~/.config/nvim/lua/plugins
+    ln -sfn ~/.dotfiles/lazyvim/lua/plugins/markdownlint.lua ~/.config/nvim/lua/plugins/markdownlint.lua
+    ln -sfn ~/.dotfiles/lazyvim/lua/plugins/session.lua ~/.config/nvim/lua/plugins/session.lua
+    ln -sfn ~/.dotfiles/lazyvim/markdownlint-cli2.jsonc ~/.config/nvim/markdownlint-cli2.jsonc
+else
+    ln -sfn ~/.dotfiles/nvim ~/.config/nvim
+fi
 # tmux (XDG layout): only the config is symlinked; TPM owns ~/.config/tmux/plugins.
 mkdir -p ~/.config/tmux/plugins
 ln -sfn ~/.dotfiles/tmux.conf ~/.config/tmux/tmux.conf
