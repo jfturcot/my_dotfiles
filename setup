@@ -48,6 +48,13 @@ ln -sfn ~/.dotfiles/kitty ~/.config/kitty
 ln -sfn ~/.dotfiles/opencode ~/.config/opencode
 mkdir -p ~/.claude
 ln -sfn ~/.dotfiles/claude/settings.json ~/.claude/settings.json
+mkdir -p ~/.codex
+if [[ -e ~/.codex/config.toml && ! -L ~/.codex/config.toml ]]; then
+    codex_backup=$(mktemp -d "$HOME/.codex/dotfiles-backup.XXXXXX") || exit 1
+    mv ~/.codex/config.toml "$codex_backup/config.toml" || exit 1
+    echo "Saved existing Codex config to $codex_backup/config.toml"
+fi
+ln -sfn ~/.dotfiles/codex/config.toml ~/.codex/config.toml
 ln -sfn ~/.dotfiles/aerospace.toml ~/.aerospace.toml
 ln -sfn ~/.dotfiles/ghostty ~/.config/ghostty
 
