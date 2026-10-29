@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design to Implementation Specs"
+  short_description: "Turn design phases into executable specs"
+  default_prompt: "Use $design-to-implementation-specs to turn this design milestone into implementation-ready phase specs."
