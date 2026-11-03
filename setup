@@ -55,6 +55,13 @@ if [[ -e ~/.codex/config.toml && ! -L ~/.codex/config.toml ]]; then
     echo "Saved existing Codex config to $codex_backup/config.toml"
 fi
 ln -sfn ~/.dotfiles/codex/config.toml ~/.codex/config.toml
+mkdir -p ~/.codex/skills
+if [[ -e ~/.codex/skills/design-to-implementation-specs && ! -L ~/.codex/skills/design-to-implementation-specs ]]; then
+    codex_backup=$(mktemp -d "$HOME/.codex/dotfiles-backup.XXXXXX") || exit 1
+    mv ~/.codex/skills/design-to-implementation-specs "$codex_backup/design-to-implementation-specs" || exit 1
+    echo "Saved existing Codex skill to $codex_backup/design-to-implementation-specs"
+fi
+ln -sfn ~/.dotfiles/codex/skills/design-to-implementation-specs ~/.codex/skills/design-to-implementation-specs
 ln -sfn ~/.dotfiles/aerospace.toml ~/.aerospace.toml
 ln -sfn ~/.dotfiles/ghostty ~/.config/ghostty
 

@@ -53,6 +53,8 @@ Use this after drafting and after implementation discoveries are reconciled.
 
 ## Tests and verification
 
+- Expected behavioral red tests lead to implementation and green reruns, not
+  a premature final handoff. Successful preflight checks are not approval pauses.
 - A behavior-changing phase contains new focused executable tests, and the
   handoff names their files, exact run command, and measured result. Lint,
   typecheck, and predecessor tests alone do not close this gate.
@@ -90,6 +92,10 @@ Use this after drafting and after implementation discoveries are reconciled.
 
 ## Coherence pass
 
+- A short execution contract near the front states the complete authorized
+  local task, real blocker procedure, and review handoff. It separates authoring
+  from implementation requests and local completion from publication approval.
+  A missing push/PR grant cannot be read as a reason to stop local implementation.
 - Every generated phase spec contains the full numbered repository-entry gate;
   “spec-first” or “standard preflight” shorthand is not accepted. The gate
   names the exact repository, branch, base, ancestry proof, spec-only first

@@ -19,6 +19,33 @@ State the implementation slice, where it sits in the larger flow, what it
 consumes and produces, and the principal behavior left to another phase. Keep
 this to a short orientation, not a second design document.
 
+## Execution contract
+
+Include a short `Execution contract` near the front of the generated spec.
+It should make these decisions explicit without duplicating
+the detailed entry gate, test catalog, or authorization list:
+
+- A request to implement authorizes the phase's in-scope local code/test changes
+  and required verification. Writing the spec alone does not start that work.
+- Work through setup, behavioral red, implementation, green/refactor,
+  regressions, lint/diff checks, and the local review handoff. An expected red
+  test is the signal to implement; it is not a blocker or completed handoff.
+- Continue after successful gates and fix in-scope failures. Give progress
+  updates without treating each intermediate result as a new approval point.
+- Pause only for a user pause, real instruction/authority conflict, unresolved
+  prerequisite, or out-of-scope decision preventing safe progress. Attempt
+  bounded safe remedies and request required execution approval through the
+  available mechanism. If still blocked, name the exact failure/decision,
+  attempts made, and smallest required user action. Do not bypass safeguards.
+- Missing publication/deployment approval blocks those actions, not local
+  implementation. After local work and verification are complete, hand off for
+  review with the spec retained. Respect tool/system limits and record a
+  concrete resume point if interrupted; never fabricate completion.
+
+Do not write an unqualified sentence such as `This spec authorizes no
+implementation` when a later implementation request is intended to authorize
+the local task. Distinguish authoring from execution instead.
+
 ## Branch and PR process
 
 Specify the exact branch and base/target, independent or stacked order,
@@ -45,6 +72,11 @@ Make the repository entry sequence a mandatory gate, not an ordinary list item:
 4. Stage only this spec and commit it as the first phase commit.
 5. Verify that commit contains the spec and no implementation files.
 6. Only then modify implementation or executable-test files.
+
+These are automatic verification checks, not human approval checkpoints. Once
+they pass, continue to tests and implementation. Give an explicit resume path
+when a verified worktree/spec-only commit already exists; do not require its
+recreation on every continuation.
 
 Include that complete numbered sequence in every generated implementation
 spec. Do not compress it into “spec-first,” “standard preflight,” a link back to
@@ -77,8 +109,10 @@ predecessor branch.
 
 Separate local implementation from PR publication. Keep the spec present until
 the draft PR has been created or updated successfully so it can supply the PR
-instructions and committed spec link. If publication is not authorized, stop
-locally with the spec present. When authorized, reconcile and commit the
+instructions and committed spec link. After local implementation and required
+verification are complete, hand off with the spec present if publication is not
+authorized. Lack of push/PR approval is not a pre-implementation stop. When
+publication is authorized, reconcile and commit the
 pre-deletion spec, push, open or update the draft while that file still exists,
 verify the PR, then delete the spec in the immediately following separate commit
 and push the deletion. If PR creation fails, do not delete the spec.
@@ -219,14 +253,18 @@ catalog. Use direct language equivalent to:
 > when the user asks. Before changing
 > production behavior, add representative tests from the catalog and observe
 > them fail for the intended reason. Add regression tests for behavior found
-> during implementation and review. Do not report the phase complete without
+> during implementation and review. After an intended red result, continue
+> directly to implementation and rerun to green; no checkpoint approval is
+> required. Diagnose and fix in-scope failures while continuing. Do not report
+> the phase complete without
 > naming the new test files and reporting the exact command and result for both
 > the new tests and relevant predecessor regressions. Stop before changing
 > implementation files only if an applicable instruction explicitly forbids
 > tests for this implementation despite the spec requirement; quote that
 > instruction and ask for direction. If tests
-> cannot be run after work starts, report the phase as incomplete rather
-> than substituting lint, typecheck, or predecessor tests.
+> cannot be run after work starts, use the execution contract's bounded remedy
+> and approval procedure. Report any remaining verification as incomplete,
+> rather than substituting lint, typecheck, or predecessor tests.
 
 Adapt the number of tests to the behavior and risk; this gate does not require
 one executable example per numbered catalog item. A phase with no executable
@@ -269,7 +307,7 @@ A common sequence is:
 1. Pass the mandatory repository/branch/base preflight.
 2. Commit only the spec as the first phase commit and verify its contents.
 3. Add contract/configuration and behavioral tests first; run them and confirm
-   new cases fail for the intended reason.
+   new cases fail for the intended reason, then continue directly to step 4.
 4. Implement pure domain logic and narrow ports until those tests pass, keeping
    the language's real types intact rather than casting around mismatches.
 5. Add adapters, runtime, or infrastructure with the same test-first loop where
@@ -278,8 +316,9 @@ A common sequence is:
 7. Reconcile the current spec with discoveries affecting this phase and add
    regression tests for cases that were not anticipated by the initial catalog.
 8. Run predecessor regressions and full verification against the committed diff.
-9. If PR publication is not authorized, stop with the spec present and report
-   the local implementation.
+9. After local implementation and required verification are complete, report
+   the local implementation with the spec retained if PR publication is not
+   authorized. This boundary does not block any earlier local step.
 10. When authorized, reconcile and commit the spec, push, open or update the
     factual draft PR while the spec is present, link that committed revision,
     and verify that PR creation/update succeeded.

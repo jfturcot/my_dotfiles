@@ -2,6 +2,7 @@
 
 My personal dotfiles.
 
-Codex configuration lives in `codex/config.toml`. The setup script links it
-to `~/.codex/config.toml`, backing up an existing file first. Skills stay
-local in `~/.codex/skills/` and are excluded from this repository.
+Codex configuration lives in `codex/config.toml`, and the
+`design-to-implementation-specs` skill lives in `codex/skills/`. The setup
+script links them into `~/.codex/`, backing up any existing config or skill
+before replacing it with a link.

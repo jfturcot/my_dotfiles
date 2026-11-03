@@ -53,6 +53,11 @@ before calling the spec implementation-ready.
 
 The spec is an executable contract, not a summary of the design:
 
+- Put a short execution contract near the front: a request to implement covers
+  the full local change and verification, not one checkpoint per turn. Expected
+  red tests lead directly to implementation and green tests. Successful gates
+  are not approval pauses. Use the spec-format reference for genuine blocker
+  handling and the separate publication boundary; avoid repeating stop warnings.
 - Give every persisted field, message, side effect, error, metric, and runtime
   setting one authoritative owner.
 - Specify ordering wherever interruption could leave paid work, leaked capacity,
@@ -81,9 +86,11 @@ The spec is an executable contract, not a summary of the design:
   not to test unless the user asks. Stop before implementation changes only
   when an applicable instruction explicitly forbids tests for this task even
   though the spec requires them; quote that conflict and request direction.
-  If test execution becomes blocked later, report the phase as incomplete;
-  lint, typecheck, and predecessor tests do not substitute for new behavioral
-  tests.
+  An expected red result is not blocked execution: continue to the fix and
+  rerun. For actual execution problems, attempt bounded safe remedies and use
+  the available approval mechanism for required access before reporting a
+  blocker. Report incomplete verification honestly; lint, typecheck, and
+  predecessor tests do not substitute for new behavioral tests.
 - In statically typed code, require the implementation to preserve and narrow
   real types instead of reaching first for assertions or casts. Prefer exported
   domain types, inferred return types, discriminated unions, schema/type guards,

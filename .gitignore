@@ -11,6 +11,3 @@ zsh_history
 
 # Claude Code local project state (not dotfiles)
 .claude/
-
-# Codex skills stay local to each machine.
-/codex/skills/
